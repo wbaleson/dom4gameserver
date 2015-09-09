@@ -1,8 +1,10 @@
 # dom4gameserver
 
-Base ubuntu, steamcmd, dom4
+Missing files:
+Need to copy dom4key file to base dir
+Need to edit config.sh with variables USERNAME and PASSWORD
 
-sudo apt-get install libglu1
+docker container with dom4 setup and ready to go on it
 
 node piece
 
