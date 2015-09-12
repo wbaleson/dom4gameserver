@@ -34,4 +34,5 @@ RUN /home/steam/steamcmd/install_dominions.sh
 ADD dom4key /home/steam/dom/
 ADD scripts /home/steam/dom/scripts/
 USER root
+#need to chown the added files
 RUN apt-get install --no-install-recommends -y --reinstall libsdl1.2debian

@@ -1,0 +1,56 @@
+{
+  "name": "game",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "era": {
+      "type": "number"
+    },
+    "eventRarity": {
+      "type": "number"
+    },
+    "hours": {
+      "type": "number"
+    },
+    "magicSites": {
+      "type": "number"
+    },
+    "masterPassword": {
+      "type": "string"
+    },
+    "minutes": {
+      "type": "number"
+    },
+    "password": {
+      "type": "string"
+    },
+    "port": {
+      "type": "number"
+    },
+    "scoredumpStatus": {
+      "type": "string"
+    },
+    "statfileStatus": {
+      "type": "string"
+    },
+    "thrones": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "id": true
+    },
+    "name": {
+      "type": "string",
+      "id": false
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

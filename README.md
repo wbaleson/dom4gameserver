@@ -11,6 +11,9 @@ node piece
 docker run --name rethink -v "$PWD:/data" -d rethinkdb
 
 
+-------
 
+rethinkdb container - data volume on host
+rethinkdb/rdb.sh to run container
 
-
+explorer filter: {"where": {"_name": "test"}}

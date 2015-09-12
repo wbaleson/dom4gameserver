@@ -1,0 +1,11 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "rethinkdb": {
+    "url": "http://192.168.99.100:28015/dom4gs",
+    "name": "rethinkdb",
+    "connector": "rethinkdb"
+  }
+}
