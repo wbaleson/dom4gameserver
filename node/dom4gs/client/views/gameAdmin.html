@@ -1,0 +1,16 @@
+<h1>Gamelist</h1>
+<hr>
+<div class="list-group">
+  <table class= "table table-hover">
+  	<tr>
+  		<th>Game Name</th>
+  		<th>Remove?</th>
+  	</tr>
+  	<tr ng-repeat="Game in Games">
+  		<td><a href='gameManager.html#{{Game.id}}'>{{Game.id}}</a></td>
+  		<td><i class="glyphicon glyphicon-remove pull-right"
+        	ng-click="removeGame(Game)"></i></td>
+    </tr>
+  </table>
+</div>
+<hr>

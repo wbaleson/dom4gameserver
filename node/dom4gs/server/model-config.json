@@ -32,6 +32,10 @@
     "dataSource": "db",
     "public": false
   },
+  "container": {
+    "dataSource": "storage",
+    "public": true
+  },
   "game": {
     "dataSource": "rethinkdb",
     "public": true,

@@ -1,38 +1,32 @@
 node piece that resides on server that has backend only providing restful services
 
-creategame - 
-updategame -
-startgame -
-stopgame -
-restartgame -
-uploadmap -
-uploadmods -
+creategame - handled by post to /games
+updategame - handled by put to /games
+
+startgame - need to figure out proper start command
+*stopgame - done
+*restartgame - done
+
+*uploadmap - done
+*uploadmods - done
+will need to make sure docker container gets storage directory from the host filesystem
 
 
-need data blob that contains
-could also just deal with it as a single options line
-name
-port
-era
-masterpw
-event rarity
-magicsites
-hours
-thrones
-story mode
-statfile public/private
-scoredump public/private
+*need data blob that contains
+	could also just deal with it as a single options line
+	name (id)
+	pid
+	port
+	era
+	masterpw
+	event rarity
+	magicsites
+	hours
+	thrones
+	story mode
+	statfile public/private
+	scoredump public/private
 
-
-support uploaded maps along with user generated maps
-
-
-is it possible to tie in or replace to brainwrinkle for frontend which would provide:
-
-users
-games
-signups
-game password
 
 -----
 07:22 <brainwrinkle> brainstorming the least possible effort here:

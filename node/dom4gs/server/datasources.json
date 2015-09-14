@@ -4,8 +4,15 @@
     "connector": "memory"
   },
   "rethinkdb": {
-    "url": "http://192.168.99.100:28015/dom4gs",
+    "url": "http://baby.artificers.net:28015/dom4gs",
     "name": "rethinkdb",
     "connector": "rethinkdb"
+  },
+  "storage": {
+    "name": "storage",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "storage",
+    "maxFileSize": "52428800"
   }
 }

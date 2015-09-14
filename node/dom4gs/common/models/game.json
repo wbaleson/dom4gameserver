@@ -7,9 +7,6 @@
     "validateUpsert": true
   },
   "properties": {
-    "era": {
-      "type": "number"
-    },
     "eventRarity": {
       "type": "number"
     },
@@ -20,33 +17,66 @@
       "type": "number"
     },
     "masterPassword": {
-      "type": "string"
+      "type": "string",
+      "default": "masterblaster"
     },
     "minutes": {
       "type": "number"
     },
     "password": {
-      "type": "string"
+      "type": "string",
+      "default": "password"
     },
     "port": {
-      "type": "number"
-    },
-    "scoredumpStatus": {
-      "type": "string"
-    },
-    "statfileStatus": {
-      "type": "string"
+      "type": "number",
+      "default": 0
     },
     "thrones": {
+      "type": "string",
+      "default": "7 3 1"
+    },
+    "pid": {
+      "type": "number",
+      "default": 0
+    },
+    "era": {
+      "type": "number",
+      "default": 1
+    },
+    "scoredumpStatus": {
+      "type": "boolean",
+      "default": false
+    },
+    "statfileStatus": {
+      "type": "boolean",
+      "default": false
+    },
+    "noClientStart": {
+      "type": "boolean",
+      "default": true
+    },
+    "map": {
       "type": "string"
+    },
+    "mods": {
+      "type": "string"
+    },
+    "teamGame": {
+      "type": "boolean",
+      "default": false
+    },
+    "teams": {
+      "type": "string"
+    },
+    "hofSize": {
+      "type": "number",
+      "default": 15
     },
     "id": {
       "type": "string",
-      "id": true
-    },
-    "name": {
-      "type": "string",
-      "id": false
+      "id": true,
+      "required": true,
+      "index": true
     }
   },
   "validations": [],
