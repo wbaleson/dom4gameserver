@@ -4,12 +4,18 @@ creategame - handled by post to /games
 updategame - handled by put to /games
 
 startgame - need to figure out proper start command
+validateSettings - check that port is open and map/mods exist and other shit?
 *stopgame - done
 *restartgame - done
 
 *uploadmap - done
 *uploadmods - done
 will need to make sure docker container gets storage directory from the host filesystem
+needs to check repo out
+
+need to add logic for validating game, then have front end run validate prior to restart
+set admin piece to only show a specific game so that pw can be entered
+have it so that if you go to a gameid that doesn't exist it defaults to create a new game so that link into app doesn't need to change
 
 
 *need data blob that contains
