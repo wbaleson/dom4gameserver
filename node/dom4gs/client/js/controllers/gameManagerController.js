@@ -1,18 +1,19 @@
 angular
   .module('app')
-  .controller('GameController', ['$scope', '$state', 'Game', '$location', function($scope,
-      $state, Game, $location) {
+  .controller('GameManagerController', ['$scope', '$state', 'Game', '$location', '$state', function($scope,
+      $state, Game, $location, $state) {
     $scope.Games = [];
-    $scope.newGame='newgamescope';
-    $scope.Game='gamescope';
+    $scope.newGame=null;
+    $scope.Game=null;
+    $scope.parameters=$location.search();
 
-    params=$location.search();
-    if(params.hasOwnProperty('gameid')==true)
+   // console.log("state param"+$stateParams)
+    if($scope.parameters.hasOwnProperty('gameid')==true)
     {
-      getGame({'id':params.gameid});
-//    setTimeout(function(){ console.log($scope.newGame); }, 2000);
-      setTimeout(function(){ console.log($scope.newGame.password); }, 2000);
-      console.log($scope.newGame.password);
+      getGame({'id':$scope.parameters.gameid},function (){
+      console.log($scope.newGame.password)});
+      //setTimeout(function(){ console.log($scope.newGame.password); }, 2000);
+      
     }
 
     function loadGame(id,pw) {
@@ -55,6 +56,10 @@ angular
     $scope.addGame = function(obj) {
       Game
         .upsert(obj);
+        $state.go('gameAdmin');
+        //$location.path('/gameAdmin');
+//$state.reload();
+//        $state.go($state.current, {}, {reload: true});
         //.$promise
         //.then(function(Game) {
         //  $scope.newGame = '';

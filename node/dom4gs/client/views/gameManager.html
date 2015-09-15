@@ -1,7 +1,9 @@
 <h1>New Dom4 Game</h1>
 <hr>
 
-<form name="loadForm" ng-model="newGame" ng-submit="loadGame(newGame)">
+<!--<form name="loadForm" ng-model="newGame" ng-submit="loadGame(newGame)">
+  <div ng-if="newGame.password==null">no pw</div>
+  <div>blah</div>
   <div class="form-group">
     <input type="text" class="form-control focus" name="gameid"
     placeholder="Load Game?" autocomplete="off" required ng-model="newGame.id">
@@ -10,13 +12,12 @@
   </div>
   <button class="btn btn-default">Load Game</button>
 </form>
-
-<form name="gameForm" novalidate ng-model="newGame" ng-submit="addGame(newGame)">
+-->
+<div ng-if="parameters.gameid && newGame.password!=parameters.password"> Password not correct for game {{newGame.id}}</div>
+<form ng-if="(parameters.gameid && newGame.password==parameters.password) || !parameters.gameid" name="gameForm" novalidate ng-model="newGame" ng-submit="addGame(newGame)">
   <div class="form-group"
       ng-class="{'has-error': gameForm.name.$invalid
         && gameForm.name.$dirty}">
-    {{newGame}}
-    {{Game}}
     <table class="table table-hover">
     <tr><td>Game Name</td><td>
     <input type="text" class="form-control focus" name="id"
@@ -114,6 +115,7 @@
       Fill out required fields please.
     </span>
   </div>
-  <button class="btn btn-default" ng-disabled="gameForm.$invalid">Add Game</button>
+  <button ng-if="!parameters.gameid" class="btn btn-default" ng-disabled="gameForm.$invalid">Add Game</button>
+  <button ng-if="parameters.gameid" class="btn btn-default" ng-disabled="gameForm.$invalid">Update Game</button>
 </form>
 <hr>

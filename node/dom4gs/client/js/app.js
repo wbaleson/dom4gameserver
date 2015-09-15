@@ -8,11 +8,20 @@ angular
     $stateProvider
       .state('dom4gs', {
         url: '',
-        views: {
-          'gameManager': {templateUrl: 'views/gameManager.html', controller: 'GameController'},
-          'gameAdmin': { templateUrl:'views/gameAdmin.html', controller: 'GameAdminController'}
-        }
-      });
+        templateUrl:'views/gameAdmin.html', 
+        controller: 'GameAdminController'
+      })
+      .state('gameManager', {
+        url:'/gameManager?gameid&password',
+        templateUrl: 'views/gameManager.html', 
+        controller: 'GameManagerController'
+      })
+      .state('gameAdmin', {
+        url:'/gameAdmin',
+        templateUrl: 'views/gameAdmin.html',
+        controller: 'GameAdminController'
+      })
+      ;
 
     $urlRouterProvider.otherwise('dom4gs');
     $locationProvider.html5Mode({

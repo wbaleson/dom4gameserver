@@ -25,13 +25,21 @@ angular
         });
     }
     
-    getGame({'id':'a'});
+   // getGame({'id':'a'});
    // $location.search('gameid');
     if($location.search('gameid')==true)
     {
     getGame({'id':'b'});
     }
 
+    $scope.manage = function(id) {
+      console.log("bad"+id);
+      //LOGIC TO GO TO CONTROLLER AND PASS PW HERE
+    }
+    $scope.restart = function(id) {
+      console.log("bad"+id);
+      //LOGIC TO validate settings and restart game
+    }
     $scope.addGame = function(obj) {
       Game
         .upsert(obj);
@@ -43,12 +51,17 @@ angular
           //getGames();
         }
 
-    $scope.removeGame = function(item) {
-      Game
-        .deleteById(item)
-        .$promise
-        .then(function() {
-          getGames();
-        });
+    $scope.removeGame = function(item,pw) {
+      if(Game.password==pw){
+        Game
+          .deleteById(item)
+          .$promise
+          .then(function() {
+            getGames();
+          });
+      }
+      else{
+        console.log("bad pw");
+      }
     };
   }]);

@@ -1,5 +1,10 @@
 module.exports = function(Game) {
 
+function validateSettings(instance) {
+  //validate settings and make sure ok
+  return "good";
+}
+
 function restartdom4(instance) {
   var a=startdom4(instance);
   a=stopdom4(instance);
@@ -125,6 +130,19 @@ function startdom4(instance) {
     cb(null, response);
     });
   }
+
+
+Game.remoteMethod(
+    'validateSettings',
+    {
+      http: {path: '/validateSettings', verb: 'get'},
+      accepts: [
+       {arg: 'gamename', type: 'string', http: { source: 'query' }},
+       {arg: 'password', type: 'string', http: { source: 'query' }}
+      ],
+      returns: {arg: 'response', type: 'string'}
+    }
+    );  
 
 Game.remoteMethod(
     'restartGame',
