@@ -32,24 +32,22 @@ angular
     getGame({'id':'b'});
     }
 
-    $scope.manage = function(id) {
+    $scope.manage = function(id, pw) {
       console.log("bad"+id);
+      console.log('/gameManager?gameid='+id+'&password='+pw);
+     // $location.path( '/gameManager?gameid='+id+'&password='+pw);
+      $state.go('gameManager', {gameid:id,password:pw});
+
       //LOGIC TO GO TO CONTROLLER AND PASS PW HERE
     }
     $scope.restart = function(id) {
       console.log("bad"+id);
       //LOGIC TO validate settings and restart game
     }
-    $scope.addGame = function(obj) {
-      Game
-        .upsert(obj);
-        //.$promise
-        //.then(function(Game) {
-        //  $scope.newGame = '';
-        //  $scope.GameForm.content.$setPristine();
-        //  $('.focus').focus();
-          //getGames();
-        }
+    
+    $scope.newGame = function(id) {
+      $state.go('gameManager',{gameid:id});
+    }
 
     $scope.removeGame = function(item,pw) {
       if(Game.password==pw){

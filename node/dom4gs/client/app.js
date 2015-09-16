@@ -8,17 +8,17 @@ angular
     $stateProvider
       .state('dom4gs', {
         url: '',
-        templateUrl:'views/gameAdmin.html', 
+        templateUrl:'gameAdmin/gameAdmin.html', 
         controller: 'GameAdminController'
       })
       .state('gameManager', {
         url:'/gameManager?gameid&password',
-        templateUrl: 'views/gameManager.html', 
+        templateUrl: 'gameManager/gameManager.html', 
         controller: 'GameManagerController'
       })
       .state('gameAdmin', {
         url:'/gameAdmin',
-        templateUrl: 'views/gameAdmin.html',
+        templateUrl: 'gameAdmin/gameAdmin.html',
         controller: 'GameAdminController'
       })
       ;

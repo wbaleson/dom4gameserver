@@ -1,20 +1,29 @@
 <h1>New Dom4 Game</h1>
 <hr>
 
-<!--<form name="loadForm" ng-model="newGame" ng-submit="loadGame(newGame)">
-  <div ng-if="newGame.password==null">no pw</div>
+<!--<form name="loadForm" ng-model="Game" ng-submit="loadGame(Game)">
+  <div ng-if="Game.password==null">no pw</div>
   <div>blah</div>
   <div class="form-group">
     <input type="text" class="form-control focus" name="gameid"
-    placeholder="Load Game?" autocomplete="off" required ng-model="newGame.id">
+    placeholder="Load Game?" autocomplete="off" required ng-model="Game.id">
     <input type="text" class="form-control focus" name="password"
-    placeholder="Password" autocomplete="off"  ng-model="newGame.password">
+    placeholder="Password" autocomplete="off"  ng-model="Game.password">
   </div>
   <button class="btn btn-default">Load Game</button>
 </form>
 -->
-<div ng-if="parameters.gameid && newGame.password!=parameters.password"> Password not correct for game {{newGame.id}}</div>
-<form ng-if="(parameters.gameid && newGame.password==parameters.password) || !parameters.gameid" name="gameForm" novalidate ng-model="newGame" ng-submit="addGame(newGame)">
+<div ng-if="parameters.gameid && Temp.password=='fuckoff' && Temp.bool==true" class='text-center'><p class='text-center'><h1>PLEASE WAIT</h1></p></div>
+
+<div ng-if="!parameters.gameid">Must pass a gameid parameter</div>
+<div ng-model="Game" ng-if="Game.gameid">GAME DOES NOT EXIST</div>
+<div ng-if="!parameters.password && parameters.gameid && Temp.bool==true">Game {{Game.id}} requires a password to view</div>
+<div ng-if="parameters.gameid && (parameters.password && Game.password && Temp.password!=parameters.password && Temp.password!='fuckoff')"> Password not correct for game {{Game.id}}</div>
+<!-- case 1: gameid dne and no pw
+    case 2: gameid exist and right pw
+    case 3: not gameid exist and wrong pw -->
+
+<form ng-if="(Temp.bool==false && (Temp.password=='fuckoff' || Temp.password==null)) || (parameters.gameid && Game.password=='') || (Temp.password==parameters.password && Temp.bool==true) " name="gameForm" novalidate ng-model="Game" ng-model="Temp" ng-submit="addGame(Game)">
   <div class="form-group"
       ng-class="{'has-error': gameForm.name.$invalid
         && gameForm.name.$dirty}">
@@ -22,92 +31,92 @@
     <tr><td>Game Name</td><td>
     <input type="text" class="form-control focus" name="id"
         placeholder="*Game Name" autocomplete="off" required
-        ng-model="newGame.id">
+        ng-model="Game.id">
     </td></tr></tr>
     <tr><td>Port</td><td>
     <input type="text" class="form-control focus" name="port"
       placeholder="*Choose an unused port (8000-9000)" autocomplete="off" required
-      ng-model="newGame.port">
+      ng-model="Game.port">
     </td></tr>
     <tr><td>Password</td><td>
     <input type="text" class="form-control focus" name="password"
       placeholder="*Game Server password" autocomplete="off" required
-      ng-model="newGame.password">
+      ng-model="Game.password">
     </td></tr>
     <tr><td>Master Password</td><td>
     <input type="text" class="form-control focus" name="masterPassword"
       placeholder="*Master Password for players" autocomplete="off" required
-      ng-model="newGame.masterPassword">
+      ng-model="Game.masterPassword">
     </td></tr>
     <tr><td>Era</td><td>
     <input type="text" class="form-control focus" name="era"
       placeholder="*Era (1-3)" autocomplete="off" required
-      ng-model="newGame.era">
+      ng-model="Game.era">
     </td></tr>
     <tr><td>Map</td><td>
     <input type="text" class="form-control focus" name="map"
       placeholder="*Mapfile name (upload from main page)" autocomplete="off" required
-      ng-model="newGame.map">
+      ng-model="Game.map">
     </td></tr>
     <tr><td>Mods</td><td>
     <input type="text" class="form-control focus" name="mods"
       placeholder="CSV list of mods (upload from main page)" autocomplete="off" 
-      ng-model="newGame.mods">
+      ng-model="Game.mods">
     </td></tr>
     <tr><td>Block Client Start</td><td>
     <input type="text" class="form-control focus" name="noClientStart"
       placeholder="Block starting the game? (true=upload only, false=can start game)" autocomplete="off" 
-      ng-model="newGame.noClientStart">
+      ng-model="Game.noClientStart">
     </td></tr>
     <tr><td>Hours</td><td>
     <input type="text" class="form-control focus" name="hours"
       placeholder="Hours in between turns (0-24)" autocomplete="off" 
-      ng-model="newGame.hours">
+      ng-model="Game.hours">
     </td></tr>
     <tr><td>Minutes</td><td>
     <input type="text" class="form-control focus" name="minutes"
       placeholder="Minutes in between turns (0-60)" autocomplete="off" 
-      ng-model="newGame.minutes">
+      ng-model="Game.minutes">
     </td></tr>
     <tr><td>Thrones</td><td>
     <input type="text" class="form-control focus" name="thrones"
       placeholder="Thrones X Y Z (Number of Thrones level 1/2/3)" autocomplete="off" 
-      ng-model="newGame.thrones">
+      ng-model="Game.thrones">
     </td></tr>
     <tr><td>Event Rarity</td><td>
     <input type="text" class="form-control focus" name="eventRarity"
       placeholder="Event Rarity (1=common 2=rare" autocomplete="off" 
-      ng-model="newGame.eventRarity">
+      ng-model="Game.eventRarity">
     </td></tr>
     <tr><td>Magic Sites Rarity</td><td>
     <input type="text" class="form-control focus" name="magicSites"
       placeholder="Magic Site Frequency (0-75)" autocomplete="off" 
-      ng-model="newGame.magicSites">
+      ng-model="Game.magicSites">
     </td></tr>
     <tr><td>Score Dump Status</td><td>
     <input type="text" class="form-control focus" name="scoreDumpStatus"
       placeholder="Score Dump Status Publicly Available(true/false)" autocomplete="off" 
-      ng-model="newGame.scoreDumpStatus">
+      ng-model="Game.scoreDumpStatus">
     </td></tr>
     <tr><td>Stat File Status</td><td>
     <input type="text" class="form-control focus" name="statFileStatus"
       placeholder="Stat File Status Publicly Available(true/false)" autocomplete="off" 
-      ng-model="newGame.statFileStatus">
+      ng-model="Game.statFileStatus">
     </td></tr>
     <tr><td>Team Game?</td><td>
     <input type="text" class="form-control focus" name="teamGame"
       placeholder="Is this a team game? (true/false)" autocomplete="off" 
-      ng-model="newGame.teamGame">
+      ng-model="Game.teamGame">
     </td></tr>
     <tr><td>Teams</td><td>
     <input type="text" class="form-control focus" name="teams"
       placeholder="CSV list of team parameters (X Y Z, ...) (X=nationid, Y=teamid, Z=type (0=def, 1=pretender, 2=disciple)" autocomplete="off" 
-      ng-model="newGame.teams">
+      ng-model="Game.teams">
     </td></tr>
     <tr><td>Hall of Fame Size</td><td>
     <input type="text" class="form-control focus" name="hofSize"
       placeholder="Hall of Fame Size" autocomplete="off" 
-      ng-model="newGame.hofSize">
+      ng-model="Game.hofSize">
     </td></tr>
     </table>
     <span class="has-error control-label" ng-show="
