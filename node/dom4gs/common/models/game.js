@@ -69,6 +69,22 @@ function startdom4(instance) {
     });
   }
 
+   Game.removeGame = function( gamename, password, cb) {
+    Game.findById( gamename, function ( err, instance) {
+      if(instance == null) {
+        response = "Game not found.";
+      }
+      else if (instance.password!=password) {
+        response = "Incorrect password";
+      }
+      else {
+        response = "Deleting game " + gamename;
+        Game.destroyById(gamename);
+      }
+    cb(null, response);
+    });
+  }
+
    Game.restartGame = function( gamename, password, cb) {
     Game.findById( gamename, function ( err, instance) {
       if(instance == null) {
@@ -143,6 +159,18 @@ Game.remoteMethod(
       returns: {arg: 'response', type: 'string'}
     }
     );  
+
+Game.remoteMethod(
+    'removeGame',
+    {
+      http: {path: '/removeGame', verb: 'get'},
+      accepts: [
+       {arg: 'gamename', type: 'string', http: { source: 'query' }},
+       {arg: 'password', type: 'string', http: { source: 'query' }}
+      ],
+      returns: {arg: 'response', type: 'string'}
+    }
+    );
 
 Game.remoteMethod(
     'restartGame',

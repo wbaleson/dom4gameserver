@@ -1,10 +1,13 @@
 angular
   .module('app')
-  .controller('GameAdminController', ['$scope', '$state', 'Game', '$location', function($scope,
-      $state, Game, $location) {
+  .controller('GameAdminController', ['$scope', '$state', 'Game', '$location', '$timeout', function($scope,
+      $state, Game, $location, $timeout) {
     $scope.Games = [];
     $scope.newGame='newgamescope';
     $scope.Game='gamescope';
+    $scope.Temp={};
+    $scope.Temp.badpw=false;
+    $scope.Temp.removed=false;
 
     function getGames() {
       Game
@@ -51,17 +54,31 @@ angular
       $state.go('gameManager',{gameid:id});
     }
 
-    $scope.removeGame = function(item,pw) {
-      if(Game.password==pw){
+    $scope.removeGame = function(id,pw) {
+      if(pw!=undefined) {
         Game
-          .deleteById(item)
+          .removeGame({gamename:id,password:pw})
           .$promise
-          .then(function() {
+          .then(function(res) {
+            console.log(res);
+            $scope.Temp.res=res;
+            if(res.response=='Incorrect password') {
+              $scope.Temp.badpw=true;
+              $scope.Temp.removed=false;
+            }
+            else
+            {
+              $scope.Temp.removed=true;
+              $scope.Temp.badpw=false;
+            }
+            //$timeout(angular.noop);
+            //$timeout(function(){console.log($scope.Temp.badpw);$scope.$apply();})
+            console.log($scope.Temp.badpw);
             getGames();
           });
+        }
+        else{
+          console.log('need to set password');
+        }
       }
-      else{
-        console.log("bad pw");
-      }
-    };
   }]);

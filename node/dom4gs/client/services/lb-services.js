@@ -1919,6 +1919,78 @@ module.factory(
 
         /**
          * @ngdoc method
+         * @name lbServices.Game#validateSettings
+         * @methodOf lbServices.Game
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `gamename` – `{string=}` - 
+         *
+         *  - `password` – `{string=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `response` – `{string=}` - 
+         */
+        "validateSettings": {
+          url: urlBase + "/games/validateSettings",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Game#removeGame
+         * @methodOf lbServices.Game
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `gamename` – `{string=}` - 
+         *
+         *  - `password` – `{string=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `response` – `{string=}` - 
+         */
+        "removeGame": {
+          url: urlBase + "/games/removeGame",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
          * @name lbServices.Game#restartGame
          * @methodOf lbServices.Game
          *

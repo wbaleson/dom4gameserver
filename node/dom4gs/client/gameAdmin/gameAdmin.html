@@ -1,4 +1,6 @@
 <h1>Gamelist</h1>
+<div ng-if="Temp.badpw">Incorrect Password</div>
+<div ng-if="Temp.removed">Game removed</div>
 <hr>
 <div class="list-group">
   <table class= "table width-auto table-hover">
@@ -12,7 +14,7 @@
   	<tr ng-repeat="Game in Games">
   		<form>
   		<td><i class="glyphicon glyphicon-remove"
-        	ng-click="removeGame(Game,credentials.id)"></i></td>
+        	ng-click="removeGame(Game.id,credentials.id)"></i></td>
       <td><input type="text" id="id"
          ng-model="credentials.id"></td>
       <!--TODO: get this to link to game manager with password added -->
