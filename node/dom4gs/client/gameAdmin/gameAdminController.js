@@ -40,9 +40,11 @@ angular
 
       //LOGIC TO GO TO CONTROLLER AND PASS PW HERE
     }
-    $scope.restart = function(id) {
-      console.log("bad"+id);
-      //LOGIC TO validate settings and restart game
+    
+    $scope.restartGame = function(id,pw) { 
+      console.log("restarting game: "+id+" with password: "+pw); 
+      Game
+        .restartGame(id,pw);
     }
     
     $scope.newGame = function(id) {

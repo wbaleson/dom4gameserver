@@ -1,22 +1,24 @@
 <h1>Gamelist</h1>
 <hr>
 <div class="list-group">
-  <table class= "table table-hover">
+  <table class= "table width-auto table-hover">
   	<tr>
-  		<th>Remove?</th>
-      <th>Password</th>
-      <th>Edit Game</th>
-      <th>Restart Game</th>
+  		<th class="col-md-9">Remove?</th>
+      <th class="col-md-1">Password</th>
+      <th class="col-md-1">Edit Game</th>
+      <th class="col-md-1">Restart Game</th>
+      <th class="col-md-1">Turn Tracker</th>
   	</tr>
   	<tr ng-repeat="Game in Games">
   		<form>
-  		<td class="col-md-1"><i class="glyphicon glyphicon-remove"
+  		<td><i class="glyphicon glyphicon-remove"
         	ng-click="removeGame(Game,credentials.id)"></i></td>
-      <td class="col-md-6"><input type="text" id="id"
+      <td><input type="text" id="id"
          ng-model="credentials.id"></td>
       <!--TODO: get this to link to game manager with password added -->
-      <td class="col-md-2"><button ng-click="manage(Game.id, credentials.id)">{{Game.id}}</button></td>
-      <td class="col-md-3"><button ng-click="restart(Game.id, credentials.id)">{{Game.id}}</button></td>
+      <td><button ng-click="manage(Game.id, credentials.id)">{{Game.id}}</button></td>
+      <td><button ng-click="restartGame(Game.id, credentials.id)">{{Game.id}}</button></td>
+      <td><a href="http://baby.artificers.net/turntracker/TurnTrack%20-%20{{Game.id}}.html">{{Game.id}}</a></td>
       
       </form>
 
