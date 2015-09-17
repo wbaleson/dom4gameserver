@@ -13,7 +13,10 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     curl \
     libglu1 \
     git \
-    vim
+    vim \
+    libsdl1.2debian \
+    nodejs \
+    npm
 
 RUN useradd -m steam
 RUN mkdir -p /home/steam/steamcmd  && \
@@ -21,6 +24,7 @@ RUN mkdir -p /home/steam/steamcmd  && \
     chown -R steam:steam /home/steam
 
 WORKDIR /home/steam/steamcmd
+USER steam
 RUN git clone https://github.com/murtidash/dom4gameserver.git /home/steam/dom4gameserver
 
 
@@ -35,7 +39,7 @@ ADD dom4key /home/steam/dom/
 ADD scripts /home/steam/dom/scripts/
 USER root
 #need to chown the added files
-RUN apt-get install --no-install-recommends -y --reinstall libsdl1.2debian nodejs npm
+RUN apt-get install --no-install-recommends -y --reinstall 
 RUN npm -g install bower
 USER steam
 RUN mkdir -p /home/steam/dom4gameserver/node/dom4gs/client/vendor
