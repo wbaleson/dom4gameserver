@@ -37,12 +37,23 @@ function startdom4(instance) {
         // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
         // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
         commandline+= instance.id;
-        var a = cp.exec(commandline, function(err, stdout, stderr){
-          console.log(stdout);
-        });
-        instance.updateAttribute('pid',a.pid, function (err, object) { });
+        var fs = require('fs'),
+             spawn = require('child_process').spawn,
+             out = fs.openSync('./out.log', 'a'),
+             err = fs.openSync('./out.log', 'a');
+
+         var child = spawn(commandline, [], {
+           detached: true,
+           stdio: [ 'ignore', out, err ]
+         });
+
+         child.unref();
+        //var a = cp.exec(commandline, function(err, stdout, stderr){
+          //console.log(stdout);
+        //});
+        instance.updateAttribute('pid',spawn.pid, function (err, object) { });
         instance.save({validate:false,throws:false}, function (err, instance) { });
-        return a.pid;
+        return spawn.pid;
  }
 
  function stopdom4(instance) {
