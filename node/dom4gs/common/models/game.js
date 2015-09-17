@@ -13,9 +13,43 @@ function restartdom4(instance) {
 
 function startdom4(instance) {
   var cp = require ('child_process');
-        var commandline="/home/steam/dom/dom4.sh -T --tcpserver --port "+instance.port+" --era "+instance.era+" --mapfile "+instance.map+" --renaming ";
+        var commandline="/home/steam/dom/dom4.sh ";
+        cpath="/users/home/steam/dom";
+        //cpath="/Users/will/Library/Application\\ Support/Steam/SteamApps/common/Dominions4/Dominions4.app/Contents/MacOS/";
+        //command="Dominions4";
+        command="dom4.sh";
+        var args=[];
+        args.push("-T");
+        args.push("--tcpserver");
+        args.push("--port "+instance.port);
+        args.push("--era "+instance.era);
+        args.push("--mapfile " + instance.map);
+        args.push("--renaming");
+        commandline+="-T --tcpserver --port "+instance.port+" --era "+instance.era+" --mapfile "+instance.map+" --renaming ";
+        if(instance.masterPassword!=undefined) { args.push("--masterpass " + instance.masterPassword + " ");}
+        if((instance.mods!=undefined ) || (instance.mods!="")) { 
+          var temp = instance.mods;
+          temp.split(',').forEach(function(myString) {
+            args.push("--enablemod " + myString + " ");
+          })
+        }
+        if(instance.noClientStart==true) { args.push("--noclientstart ");}
+        if(instance.hours!=undefined) { args.push("--hours " + instance.hours + " ");}
+        if(instance.minutes!=undefined) { args.push("--minutes " + instance.minutes + " ");}
+        if(instance.thrones!=undefined) { args.push("--thrones " + instance.thrones + " ");}
+        if(instance.requiredap!=undefined) { args.push("--requiredap " + instance.requiredap + " ");}
+        if(instance.eventRarity!=undefined) { args.push("--eventrarity " + instance.eventRarity + " ");}
+        if(instance.magicSites!=undefined) { args.push("--magicsites " + instance.magicSites + " ");}
+        if(instance.scoredumpStatus==true) { args.push("--scoredump ");}
+        if(instance.statfileStatus!=undefined) { args.push("--statfile ");}
+        if(instance.hofSize!=undefined) { args.push("--hofsize " + instance.hofSize + " ");}
+        if(instance.teamGame!=undefined) { args.push("--teamgame " + instance.teamGame + " ");}
+        if(instance.teams!=undefined) { args.push("--teams " + instance.teams + " ");}
+        args.push(instance.id);
+
+        //first try
         if(instance.masterPassword!=undefined) { commandline+="--masterpass " + instance.masterPassword + " ";}
-        if(instance.mods!=undefined) { 
+        if((instance.mods!=undefined ) || (instance.mods!="")) { 
           var temp = instance.mods;
           temp.split(',').forEach(function(myString) {
             commandline+="--enablemod " + myString + " ";
@@ -37,23 +71,31 @@ function startdom4(instance) {
         // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
         // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
         commandline+= instance.id;
+        //command='rundom.sh';
+        //args=[];
+        // args.push("-f");
+        // args.push("bower.json");
+        // args.push("&");
         var fs = require('fs'),
              spawn = require('child_process').spawn,
              out = fs.openSync('./out.log', 'a'),
              err = fs.openSync('./out.log', 'a');
 
-         var child = spawn(commandline, [], {
+        console.log(command,args,process.env.PATH);
+         var child = spawn(command, args, {
            detached: true,
-           stdio: [ 'ignore', out, err ]
-         });
+           stdio: [ 'ignore', out, err ],
+           cwd: cpath
+         })
+         .on('error', function( err) { throw err});
 
          child.unref();
         //var a = cp.exec(commandline, function(err, stdout, stderr){
           //console.log(stdout);
         //});
-        instance.updateAttribute('pid',spawn.pid, function (err, object) { });
+        instance.updateAttribute('pid',child.pid, function (err, object) { });
         instance.save({validate:false,throws:false}, function (err, instance) { });
-        return spawn.pid;
+        return child.pid;
  }
 
  function stopdom4(instance) {

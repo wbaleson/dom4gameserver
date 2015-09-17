@@ -12,7 +12,7 @@
     "name": "storage",
     "connector": "loopback-component-storage",
     "provider": "filesystem",
-    "root": "/home/steam/dominions4",
+    "root": "/users/will/dominions4",
     "maxFileSize": "52428800"
   }
 }
