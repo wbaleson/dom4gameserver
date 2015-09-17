@@ -13,7 +13,31 @@ function restartdom4(instance) {
 
 function startdom4(instance) {
   var cp = require ('child_process');
-        var a = cp.exec('STARTDOM4', function(err, stdout, stderr){
+        var commandline="/home/steam/dom/dom4.sh -T --tcpserver --port "+instance.port+" --era "+instance.era+" --mapfile "+instance.map+" --renaming ";
+        if(instance.masterPassword!=undefined) { commandline+="--masterpass " + instance.masterPassword + " ";}
+        if(instance.mods!=undefined) { 
+          var temp = instance.mods;
+          temp.split(',').forEach(function(myString) {
+            commandline+="--enablemod " + myString + " ";
+          })
+        }
+        if(instance.noClientStart==true) { commandline+="--noclientstart ";}
+        if(instance.hours!=undefined) { commandline+="--hours " + instance.hours + " ";}
+        if(instance.minutes!=undefined) { commandline+="--minutes " + instance.minutes + " ";}
+        if(instance.thrones!=undefined) { commandline+="--thrones " + instance.thrones + " ";}
+        if(instance.requiredap!=undefined) { commandline+="--requiredap " + instance.requiredap + " ";}
+        if(instance.eventRarity!=undefined) { commandline+="--eventrarity " + instance.eventRarity + " ";}
+        if(instance.magicSites!=undefined) { commandline+="--magicsites " + instance.magicSites + " ";}
+        if(instance.scoredumpStatus==true) { commandline+="--scoredump ";}
+        if(instance.statfileStatus!=undefined) { commandline+="--statfile ";}
+        if(instance.hofSize!=undefined) { commandline+="--hofsize " + instance.hofSize + " ";}
+        if(instance.teamGame!=undefined) { commandline+="--teamgame " + instance.teamGame + " ";}
+        if(instance.teams!=undefined) { commandline+="--teams " + instance.teams + " ";}
+        // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
+        // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
+        // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
+        commandline+= instance.id;
+        var a = cp.exec(commandline, function(err, stdout, stderr){
           console.log(stdout);
         });
         instance.updateAttribute('pid',a.pid, function (err, object) { });

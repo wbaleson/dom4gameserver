@@ -17,9 +17,16 @@
   "parse": {},
   "routes": {},
   "files": {
-    "loopback#static": {
-      "params": "$!../client"
+    "loopback#static": [
+    {
+      "params": "$!../client",
+      "paths":"/"
+    },
+    {
+      "params": "$!../client/uploads",
+      "paths":"/files"
     }
+  ]
   },
   "final": {
     "loopback#urlNotFound": {}

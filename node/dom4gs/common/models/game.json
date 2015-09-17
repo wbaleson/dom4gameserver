@@ -35,6 +35,9 @@
       "type": "string",
       "default": "7 3 1"
     },
+    "requiredap": {
+      "type": "string"
+    },
     "pid": {
       "type": "number",
       "default": 0

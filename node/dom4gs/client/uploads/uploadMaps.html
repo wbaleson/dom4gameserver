@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html id="ng-app" ng-app="app"> <!-- id="ng-app" IE<8 -->
 
 <head>
@@ -13,8 +13,8 @@
 
     <!--<script src="../bower_components/angular/angular.js"></script>-->
     <script src="http://code.angularjs.org/1.4.4/angular.min.js"></script>
-    <script src="js/angular-file-upload.min.js"></script>
-    <script src="js/controllers/maps.js"></script>
+    <script src="angular-file-upload.min.js"></script>
+    <script src="mapsController.js"></script>
 
     <style>
         .my-drop-zone {
@@ -38,7 +38,8 @@
 </head>
 
 <!-- 1. nv-file-drop | nv-file-drop="options" -->
-<body ng-controller="MapsController" nv-file-drop uploader="uploader">
+<body ng-controller="MapsTestController" nv-file-drop uploader="uploader">
+<ng-include src="'header.html'"></ng-include>
 
 <div class="container">
 
@@ -169,7 +170,7 @@
         </div>
 
         <div class="col-md-9" style="margin-bottom: 40px"
-             ng-controller="MapFilesController" data-ng-init="load()">
+             ng-controller="MapsFilesController" data-ng-init="load()">
 
             <h3>Files in the container</h3>
 
@@ -182,12 +183,6 @@
                             file.name }}</strong></a></td>
                     <td>
                     <td>
-                        <button type="button" class="btn btn-danger btn-xs"
-                                ng-click="delete($index, file.name)"
-                                title="Delete the file">
-                            <span class="glyphicon glyphicon-trash"></span>
-                            Remove
-                        </button>
 
                     </td>
                     </button>

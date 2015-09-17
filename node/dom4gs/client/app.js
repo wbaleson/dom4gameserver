@@ -3,7 +3,7 @@ angular
     'lbServices',
     'ui.router'
   ])
-  .config(['$stateProvider', '$locationProvider', '$urlRouterProvider', function($stateProvider, 
+  .config(['$stateProvider', '$locationProvider', '$urlRouterProvider',  function($stateProvider, 
     $locationProvider, $urlRouterProvider) {
     $stateProvider
       .state('dom4gs', {
@@ -20,6 +20,20 @@ angular
         url:'/gameAdmin',
         templateUrl: 'gameAdmin/gameAdmin.html',
         controller: 'GameAdminController'
+      })
+      .state('uploadMaps', {
+        url:'/uploadMaps',
+        templateUrl: 'uploads/uploadMaps.html',
+        controller: 'MapsController'
+      })
+      .state('uploadMods', {
+        url:'/uploadMods',
+        templateUrl: 'uploads/uploadMods.html',
+        controller: 'ModsController'
+      })
+      .state('files', {
+        url:'/fileManager',
+        templateUrl: 'uploads/fileManager.html'
       })
       ;
 

@@ -35,4 +35,11 @@ ADD dom4key /home/steam/dom/
 ADD scripts /home/steam/dom/scripts/
 USER root
 #need to chown the added files
-RUN apt-get install --no-install-recommends -y --reinstall libsdl1.2debian
+RUN apt-get install --no-install-recommends -y --reinstall libsdl1.2debian nodejs npm
+RUN npm -g install bower
+USER steam
+RUN mkdir -p /home/steam/dom4gameserver/node/dom4gs/client/vendor
+RUN mkdir -p /home/steam/dom4gameserver/node/dom4gs/storage/mods
+RUN mkdir -p /home/steam/dom4gameserver/node/dom4gs/storage/maps
+RUN /home/steam/dom4gameserver/node/dom4gs/bower install --config.interactive=false
+RUN /home/steam/dom4gameserver/node/dom4gs/npm install
