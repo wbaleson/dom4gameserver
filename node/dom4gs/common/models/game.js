@@ -30,6 +30,7 @@ function startdom4(instance) {
         if(instance.mods!=undefined ) { 
           var temp = instance.mods;
           temp.split(',').forEach(function(myString) {
+            //fix this so if no mods it doesn't do shit
            // args.push("--enablemod " + myString + " ");
           })
         }
@@ -52,7 +53,8 @@ function startdom4(instance) {
         if((instance.mods!=undefined ) || (instance.mods!="")) { 
           var temp = instance.mods;
           temp.split(',').forEach(function(myString) {
-            commandline+="--enablemod " + myString + " ";
+            //fix this so if no mods it doesn't do shit
+            // commandline+="--enablemod " + myString + " ";
           })
         }
         if(instance.noClientStart==true) { commandline+="--noclientstart ";}
@@ -95,9 +97,9 @@ function startdom4(instance) {
         var a = cp.exec(commandline, function(err, stdout, stderr){
           console.log(stdout);
         });
-        instance.updateAttribute('pid',child.pid, function (err, object) { });
+        instance.updateAttribute('pid',a.pid, function (err, object) { });
         instance.save({validate:false,throws:false}, function (err, instance) { });
-        return child.pid;
+        return a.pid;
  }
 
  function stopdom4(instance) {
@@ -108,8 +110,9 @@ function startdom4(instance) {
         var output=stdout;
         pidstr=output.split(" ",1);
         console.log(pidstr);
-        var a = cp.exec('kill -9 '+pidstr, function(err, stdout, stderr){
-          console.log(pidstr + "in kill thing");
+        var realpid=pidstr.match('\d+');
+        var a = cp.exec('kill -9 '+realpid, function(err, stdout, stderr){
+          console.log(realpid + "in kill thing");
           console.log(stdout);
           var output=stdout;
 

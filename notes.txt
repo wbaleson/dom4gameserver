@@ -33,6 +33,8 @@ have it so that if you go to a gameid that doesn't exist it defaults to create a
 	statfile public/private
 	scoredump public/private
 
+ps -ef | grep blitz1 | grep dom4_amd64
+
 
 -----
 07:22 <brainwrinkle> brainstorming the least possible effort here:

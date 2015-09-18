@@ -30,6 +30,7 @@ RUN git clone https://github.com/murtidash/dom4gameserver.git /home/steam/dom4ga
 
 ADD config.sh /home/steam/steamcmd/
 ADD install_dominions.sh /home/steam/steamcmd/install_dominions.sh
+USER root
 RUN chown steam:steam install_dominions.sh config.sh
 RUN chmod 777 /home/steam/steamcmd/install_dominions.sh
 
@@ -45,5 +46,10 @@ USER steam
 RUN mkdir -p /home/steam/dom4gameserver/node/dom4gs/client/vendor
 RUN mkdir -p /home/steam/dom4gameserver/node/dom4gs/storage/mods
 RUN mkdir -p /home/steam/dom4gameserver/node/dom4gs/storage/maps
-RUN /home/steam/dom4gameserver/node/dom4gs/bower install --config.interactive=false
-RUN /home/steam/dom4gameserver/node/dom4gs/npm install
+WORKDIR /home/steam/dom4gameserver/node/dom4gs/
+USER root
+RUN ln -s /usr/bin/nodejs /usr/bin/node
+USER steam
+RUN bower install --config.interactive=false
+RUN npm install
+USER root
