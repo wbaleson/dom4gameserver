@@ -14,7 +14,7 @@ function restartdom4(instance) {
 function startdom4(instance) {
   var cp = require ('child_process');
         var commandline="/home/steam/dom/dom4.sh ";
-        cpath="/users/home/steam/dom";
+        cpath="/home/steam/dom";
         //cpath="/Users/will/Library/Application\\ Support/Steam/SteamApps/common/Dominions4/Dominions4.app/Contents/MacOS/";
         //command="Dominions4";
         command="dom4.sh";
@@ -27,10 +27,10 @@ function startdom4(instance) {
         args.push("--renaming");
         commandline+="-T --tcpserver --port "+instance.port+" --era "+instance.era+" --mapfile "+instance.map+" --renaming ";
         if(instance.masterPassword!=undefined) { args.push("--masterpass " + instance.masterPassword + " ");}
-        if((instance.mods!=undefined ) || (instance.mods!="")) { 
+        if(instance.mods!=undefined ) { 
           var temp = instance.mods;
           temp.split(',').forEach(function(myString) {
-            args.push("--enablemod " + myString + " ");
+           // args.push("--enablemod " + myString + " ");
           })
         }
         if(instance.noClientStart==true) { args.push("--noclientstart ");}
@@ -70,42 +70,63 @@ function startdom4(instance) {
         // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
         // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
         // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
-        commandline+= instance.id;
+        commandline+= instance.id + " &";
+//        ps -ef | grep blitz1 | grep dom4_amd64
+
         //command='rundom.sh';
         //args=[];
         // args.push("-f");
         // args.push("bower.json");
         // args.push("&");
-        var fs = require('fs'),
-             spawn = require('child_process').spawn,
-             out = fs.openSync('./out.log', 'a'),
-             err = fs.openSync('./out.log', 'a');
+        // var fs = require('fs'),
+        //      spawn = require('child_process').spawn,
+        //      out = fs.openSync('./out.log', 'a'),
+        //      err = fs.openSync('./out.log', 'a');
 
-        console.log(command,args,process.env.PATH);
-         var child = spawn(command, args, {
-           detached: true,
-           stdio: [ 'ignore', out, err ],
-           cwd: cpath
-         })
-         .on('error', function( err) { throw err});
+        // console.log(command,args,process.env.PATH);
+        //  var child = spawn(command, args, {
+        //    detached: true,
+        //    stdio: [ 'ignore', out, err ],
+        //    cwd: cpath
+        //  })
+        //  .on('error', function( err) { throw err});
 
-         child.unref();
-        //var a = cp.exec(commandline, function(err, stdout, stderr){
-          //console.log(stdout);
-        //});
+        //  child.unref();
+        var a = cp.exec(commandline, function(err, stdout, stderr){
+          console.log(stdout);
+        });
         instance.updateAttribute('pid',child.pid, function (err, object) { });
         instance.save({validate:false,throws:false}, function (err, instance) { });
         return child.pid;
  }
 
  function stopdom4(instance) {
-   var cp = require ('child_process');
-        var a = cp.exec('kill -9 '+instance.pid, function(err, stdout, stderr){
+    var pidstr="";
+    var cp = require ('child_process');
+    var pid = cp.exec('ps | grep '+instance.id, function(err,stdout,stderr){
+        console.log(stdout);
+        var output=stdout;
+        pidstr=output.split(" ",1);
+        console.log(pidstr);
+        var a = cp.exec('kill -9 '+pidstr, function(err, stdout, stderr){
+          console.log(pidstr + "in kill thing");
+          console.log(stdout);
+          var output=stdout;
+
         });
-        oldpid=instance.pid;
-        instance.updateAttribute('pid',0, function (err, object) { });
-        instance.save({validate:false,throws:false}, function (err, instance) { });
-        return oldpid;
+    });
+
+    // var cp = require ('child_process');
+    // var pid = cp.exec('ps -ef | grep '+instance.id + ' | grep dom4_amd64', function(err,stdout,stderr){
+    //     console.log(stdout);
+    //     var output=stdout;
+    // });
+
+   
+    oldpid=instance.pid;
+    instance.updateAttribute('pid',0, function (err, object) { });
+    instance.save({validate:false,throws:false}, function (err, instance) { });
+    return oldpid;
  }
 
  Game.status = function(cb) {
@@ -206,6 +227,7 @@ function startdom4(instance) {
 
  Game.stopGame = function( gamename, password, cb) {
     Game.findById( gamename, function ( err, instance) {
+       stopdom4(instance);
       if(instance == null) {
         response = "Game "+gamename + " not found.";
       }
