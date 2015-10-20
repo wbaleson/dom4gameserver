@@ -50,7 +50,7 @@ function startdom4(instance) {
 
         //first try
         if(instance.masterPassword!=undefined) { commandline+="--masterpass " + instance.masterPassword + " ";}
-        if((instance.mods!=undefined ) || (instance.mods!="")) { 
+        if((instance.mods!=undefined ) && (instance.mods!="")) { 
           var temp = instance.mods;
           temp.split(',').forEach(function(myString) {
             //fix this so if no mods it doesn't do shit
@@ -108,15 +108,18 @@ function startdom4(instance) {
     var pid = cp.exec('ps | grep '+instance.id, function(err,stdout,stderr){
         console.log(stdout);
         var output=stdout;
-        pidstr=output.split(" ",1);
+        if(pidstr!=undefined && pidstr!='' ){
+	console.log("pidstr:"+pidstr);
+	pidstr=output.split(" ",1);
         console.log(pidstr);
-        var realpid=pidstr.match('\d+');
+	var realpid=pidstr.match('\d+');
         var a = cp.exec('kill -9 '+realpid, function(err, stdout, stderr){
           console.log(realpid + "in kill thing");
           console.log(stdout);
           var output=stdout;
 
         });
+	}
     });
 
     // var cp = require ('child_process');
