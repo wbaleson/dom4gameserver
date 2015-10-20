@@ -1,3 +1,4 @@
+#$1=game directory
 cd $1
 /home/steam/dom4gameserver/scripts/TurnTracker/turntrack.py
 /home/steam/dom4gameserver/scripts/TurnTracker/makettweb.py

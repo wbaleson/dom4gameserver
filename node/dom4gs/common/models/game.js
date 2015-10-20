@@ -42,12 +42,13 @@ function startdom4(instance) {
         if(instance.teamGame==true) { commandline+="--teamgame ";}
         if(instance.teams!=undefined) { commandline+="--teams " + instance.teams + " ";}
 
-        //commandline+="--preexec '/home/steam/dom4gameserver/scripts/preexecaut.sh /home/steam/dominions4/savedgames/"+instance.id+" "+instance.id+"'";
-commandline+= instance.id + " &";         var a = cp.exec(commandline,
-function(err, stdout, stderr){           console.log(stdout);         });
-instance.updateAttribute('pid',a.pid, function (err, object) { });
-instance.save({validate:false,throws:false}, function (err, instance) { });
-return a.pid;  }
+        commandline+="--preexec '/home/steam/dom4gameserver/scripts/preexecaut.sh /home/steam/dominions4/savedgames/"+instance.id+" "+instance.id+"' ";
+        commandline+="--postexec '/home/steam/dom4gameserver/scripts/postexecaut.sh /home/steam/dominions4/savedgames/"+instance.id+"' ";
+        commandline+= instance.id + " &";         var a = cp.exec(commandline,
+        function(err, stdout, stderr){           console.log(stdout);         });
+        instance.updateAttribute('pid',a.pid, function (err, object) { });
+        instance.save({validate:false,throws:false}, function (err, instance) { });
+        return a.pid;  }
 
  function stopdom4(instance) {
     var pidstr="";

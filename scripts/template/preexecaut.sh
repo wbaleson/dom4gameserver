@@ -1,3 +1,5 @@
+#$1=game directory
+#$2=game name
 cd $1
 i=1
 if [[ -e $2-1.tgz ]] ; then
