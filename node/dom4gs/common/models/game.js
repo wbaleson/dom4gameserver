@@ -18,35 +18,7 @@ function startdom4(instance) {
         //cpath="/Users/will/Library/Application\\ Support/Steam/SteamApps/common/Dominions4/Dominions4.app/Contents/MacOS/";
         //command="Dominions4";
         command="dom4.sh";
-        var args=[];
-        args.push("-T");
-        args.push("--tcpserver");
-        args.push("--port "+instance.port);
-        args.push("--era "+instance.era);
-        args.push("--mapfile " + instance.map);
-        args.push("--renaming");
         commandline+="-T --tcpserver --port "+instance.port+" --era "+instance.era+" --mapfile "+instance.map+" --renaming ";
-        if(instance.masterPassword!=undefined) { args.push("--masterpass " + instance.masterPassword + " ");}
-        if(instance.mods!=undefined ) { 
-          var temp = instance.mods;
-          temp.split(',').forEach(function(myString) {
-            //fix this so if no mods it doesn't do shit
-           // args.push("--enablemod " + myString + " ");
-          })
-        }
-        if(instance.noClientStart==true) { args.push("--noclientstart ");}
-        if(instance.hours!=undefined) { args.push("--hours " + instance.hours + " ");}
-        if(instance.minutes!=undefined) { args.push("--minutes " + instance.minutes + " ");}
-        if(instance.thrones!=undefined) { args.push("--thrones " + instance.thrones + " ");}
-        if(instance.requiredap!=undefined) { args.push("--requiredap " + instance.requiredap + " ");}
-        if(instance.eventRarity!=undefined) { args.push("--eventrarity " + instance.eventRarity + " ");}
-        if(instance.magicSites!=undefined) { args.push("--magicsites " + instance.magicSites + " ");}
-        if(instance.scoredumpStatus==true) { args.push("--scoredump ");}
-        if(instance.statfileStatus!=undefined) { args.push("--statfile ");}
-        if(instance.hofSize!=undefined) { args.push("--hofsize " + instance.hofSize + " ");}
-        if(instance.teamGame!=undefined) { args.push("--teamgame " + instance.teamGame + " ");}
-        if(instance.teams!=undefined) { args.push("--teams " + instance.teams + " ");}
-        args.push(instance.id);
 
         //first try
         if(instance.masterPassword!=undefined) { commandline+="--masterpass " + instance.masterPassword + " ";}
@@ -67,40 +39,17 @@ function startdom4(instance) {
         if(instance.scoredumpStatus==true) { commandline+="--scoredump ";}
         if(instance.statfileStatus!=undefined) { commandline+="--statfile ";}
         if(instance.hofSize!=undefined) { commandline+="--hofsize " + instance.hofSize + " ";}
-        if(instance.teamGame!=undefined) { commandline+="--teamgame " + instance.teamGame + " ";}
+        if(instance.teamGame==true) { commandline+="--teamgame ";}
         if(instance.teams!=undefined) { commandline+="--teams " + instance.teams + " ";}
-        // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
-        // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
-        // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
-        commandline+= instance.id + " &";
-//        ps -ef | grep blitz1 | grep dom4_amd64
 
-        //command='rundom.sh';
-        //args=[];
-        // args.push("-f");
-        // args.push("bower.json");
-        // args.push("&");
-        // var fs = require('fs'),
-        //      spawn = require('child_process').spawn,
-        //      out = fs.openSync('./out.log', 'a'),
-        //      err = fs.openSync('./out.log', 'a');
-
-        // console.log(command,args,process.env.PATH);
-        //  var child = spawn(command, args, {
-        //    detached: true,
-        //    stdio: [ 'ignore', out, err ],
-        //    cwd: cpath
-        //  })
-        //  .on('error', function( err) { throw err});
-
-        //  child.unref();
-        var a = cp.exec(commandline, function(err, stdout, stderr){
-          console.log(stdout);
-        });
-        instance.updateAttribute('pid',a.pid, function (err, object) { });
-        instance.save({validate:false,throws:false}, function (err, instance) { });
-        return a.pid;
- }
+        //commandline+="--preexec
+'/home/steam/dom4gameserver/scripts/preexecaut.sh
+/home/steam/dominions4/savedgames/"+instance.id+" "+instance.id+"'";
+commandline+= instance.id + " &";         var a = cp.exec(commandline,
+function(err, stdout, stderr){           console.log(stdout);         });
+instance.updateAttribute('pid',a.pid, function (err, object) { });
+instance.save({validate:false,throws:false}, function (err, instance) { });
+return a.pid;  }
 
  function stopdom4(instance) {
     var pidstr="";

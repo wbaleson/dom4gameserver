@@ -25,6 +25,10 @@
     {
       "params": "$!../client/uploads",
       "paths":"/files"
+    },
+    {
+      "params": "$!../client/turntracker",
+      "paths":"/turntracker"
     }
   ]
   },
