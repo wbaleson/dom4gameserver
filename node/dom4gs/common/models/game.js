@@ -51,24 +51,32 @@ function startdom4(instance) {
         return a.pid;  }
 
  function stopdom4(instance) {
-    var pidstr="";
+    console.log("in stopdom4");
+    var pidstr;
     var cp = require ('child_process');
-    var pid = cp.exec('ps | grep '+instance.id, function(err,stdout,stderr){
+    var line='ps e | grep dom4_amd64 | grep '+instance.port+' | grep '+instance.id;
+    console.log(line);
+    var pid = cp.exec(line, function(err,stdout,stderr){
         console.log(stdout);
         var output=stdout;
-        if(pidstr!=undefined && pidstr!='' ){
-	console.log("pidstr:"+pidstr);
-	pidstr=output.split(" ",1);
-        console.log(pidstr);
-	var realpid=pidstr.match('\d+');
-        var a = cp.exec('kill -9 '+realpid, function(err, stdout, stderr){
-          console.log(realpid + "in kill thing");
-          console.log(stdout);
-          var output=stdout;
-
-        });
+	output=output.slice(1);
+        var pidarray=output.split(" ",2);
+        pidstr=pidarray[1];
+	console.log("output=-"+output+"- pidstr="+pidstr);
+	if(pidstr!=undefined && pidstr!='' ){
+	  console.log("pidstr:"+pidstr);
+          console.log(pidstr);
+          var a = cp.exec('kill -9 '+pidstr, function(err, stdout, stderr){
+            console.log(pidstr + "in kill thing");
+            console.log(stdout);
+            var output=stdout;
+          });
 	}
+        else{
+          console.log("blank pid");
+        }
     });
+
 
     // var cp = require ('child_process');
     // var pid = cp.exec('ps -ef | grep '+instance.id + ' | grep dom4_amd64', function(err,stdout,stderr){
@@ -82,7 +90,6 @@ function startdom4(instance) {
     instance.save({validate:false,throws:false}, function (err, instance) { });
     return oldpid;
  }
-
  Game.status = function(cb) {
     var currentDate = new Date();
     var currentHour = currentDate.getHours();
