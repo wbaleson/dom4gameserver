@@ -8,19 +8,14 @@ function validateSettings(instance) {
 function restartdom4(instance) {
   var a=startdom4(instance);
   a=stopdom4(instance);
+  a=startdom4(instance);
   return a;
 }
 
 function startdom4(instance) {
   var cp = require ('child_process');
-        var commandline="/home/steam/dom/dom4.sh ";
-        cpath="/home/steam/dom";
-        //cpath="/Users/will/Library/Application\\ Support/Steam/SteamApps/common/Dominions4/Dominions4.app/Contents/MacOS/";
-        //command="Dominions4";
-        command="dom4.sh";
-        commandline+="-T --tcpserver --port "+instance.port+" --era "+instance.era+" --mapfile "+instance.map+" --renaming ";
-
-        //first try
+        console.log("in startdom4");
+	var commandline="/home/steam/dom/dom4.sh -T --tcpserver --port "+instance.port+" --era "+instance.era+" --mapfile "+instance.map+" --renaming ";
         if(instance.masterPassword!=undefined) { commandline+="--masterpass " + instance.masterPassword + " ";}
         if((instance.mods!=undefined ) && (instance.mods!="")) { 
           var temp = instance.mods;
@@ -41,11 +36,14 @@ function startdom4(instance) {
         if(instance.hofSize!=undefined) { commandline+="--hofsize " + instance.hofSize + " ";}
         if(instance.teamGame==true) { commandline+="--teamgame ";}
         if(instance.teams!=undefined) { commandline+="--teams " + instance.teams + " ";}
-
-        commandline+="--preexec '/home/steam/dom4gameserver/scripts/preexecaut.sh /home/steam/dominions4/savedgames/"+instance.id+" "+instance.id+"' ";
-        commandline+="--postexec '/home/steam/dom4gameserver/scripts/postexecaut.sh /home/steam/dominions4/savedgames/"+instance.id+"' ";
-        commandline+= instance.id + " &";         var a = cp.exec(commandline,
-        function(err, stdout, stderr){           console.log(stdout);         });
+        // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
+        // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
+        // if(instance.eventRarity!=undefined) { commandline+="--eventRarity " + instance.eventRarity + " ";}
+        commandline+= instance.id;
+        console.log("commandline to start="+commandline);
+	var a = cp.exec(commandline, function(err, stdout, stderr){
+          console.log(stdout);
+        });
         instance.updateAttribute('pid',a.pid, function (err, object) { });
         instance.save({validate:false,throws:false}, function (err, instance) { });
         return a.pid;  }
@@ -61,8 +59,8 @@ function startdom4(instance) {
         var output=stdout;
 	output=output.slice(1);
         var pidarray=output.split(" ",2);
-        pidstr=pidarray[1];
-	console.log("output=-"+output+"- pidstr="+pidstr);
+        pidstr=pidarray[0];
+	console.log("output="+output+" : pidstr="+pidstr+" : pidarray="+pidarray);
 	if(pidstr!=undefined && pidstr!='' ){
 	  console.log("pidstr:"+pidstr);
           console.log(pidstr);
